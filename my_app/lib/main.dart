@@ -15,17 +15,30 @@ class Home extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.red[400],
       ),
-      body: Center(
-        child: Text(
-          'my app',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-            color: Colors.blueGrey[600],
-            fontFamily: 'IndieFlower',
+      // body: Container(
+      //   color: Colors.grey,
+      //   child: Text('hellooow'),
+      //   padding: EdgeInsets.all(20),
+      //   margin: EdgeInsets.all(30),
+      // ),
+
+      // body: Padding(padding: EdgeInsets.all(20), child: Text('hellow')),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('hwloow world'),
+          TextButton(
+            onPressed: () {},
+            child: Text('click me'),
+            style: TextButton.styleFrom(backgroundColor: Colors.green),
           ),
-        ),
+          Container(
+            color: Colors.amber,
+            padding: EdgeInsets.all(20),
+            child: Text('in container'),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
