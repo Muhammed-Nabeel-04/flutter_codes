@@ -6,21 +6,22 @@ class ProductCard extends StatelessWidget {
   final String productname;
   final double unitPrice;
   final int quantity;
+
   final String labl;
- final Widget? icon;
+  final Widget? icon;
+
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final bool compact;
 
-
   const ProductCard({
     super.key,
-    this.icon ,
+    this.icon,
     required this.productname,
     required this.unitPrice,
     required this.quantity,
     required this.compact,
-             this.labl = '',
+    this.labl = '',
 
     required this.onIncrement,
     required this.onDecrement,
@@ -32,13 +33,12 @@ class ProductCard extends StatelessWidget {
       padding: EdgeInsetsGeometry.all(16),
       child: Column(
         children: [
-        
           if (compact) ...[
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color:compact? Colors.grey[300]: Colors.transparent,
+                color: compact ? Colors.grey[300] : Colors.transparent,
               ),
               child: Column(
                 children: [
