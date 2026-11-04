@@ -15,7 +15,20 @@ class LuckeySpin extends StatefulWidget {
 }
 
 class _LuckeySpinState extends State<LuckeySpin> {
-  List<String> prizes = ["Mouse", 'keyboard', 'Laptop',"Mouse", 'keyboard', 'Laptop',"Mouse", 'keyboard', 'Laptop',"Mouse", 'keyboard', 'Laptop'];
+  List<String> prizes = [
+    "Mouse",
+    'keyboard',
+    'Laptop',
+    "Mouse",
+    'keyboard',
+    'Laptop',
+    "Mouse",
+    'keyboard',
+    'Laptop',
+    "Mouse",
+    'keyboard',
+    'Laptop',
+  ];
   List<String> players = [];
   String result = "Let's spin";
   double rotation = 0;
@@ -62,20 +75,11 @@ class _LuckeySpinState extends State<LuckeySpin> {
 
   void addToDict() {
     // winners[players[currentPlayerIndex]] = result;
-    if (result == 'Laptop'){
-      winners.add({
-      'player' : players[currentPlayerIndex],
-      'prize' : "ytdrttr"
-  });
+    if (result == 'Laptop') {
+      winners.add({'player': players[currentPlayerIndex], 'prize': "ytdrttr"});
+    } else {
+      winners.add({'player': players[currentPlayerIndex], 'prize': result});
     }
-   else{
-     winners.add({
-      'player' : players[currentPlayerIndex],
-      'prize' : result
-  });
-   }
-
-   
   }
 
   void countindex() {
@@ -136,48 +140,31 @@ class _LuckeySpinState extends State<LuckeySpin> {
                       numberOfPlayer: numberOfPlayer,
                     ),
                   ),
-                  
 
+                if (numberOfPlayer > 0 && players.length < numberOfPlayer)
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: SizedBox(
+                      height: 600,
 
+                      child: ListView.builder(
+                        itemCount: players.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(12),
 
-
-
-
-
-                  if (numberOfPlayer > 0 && players.length < numberOfPlayer)
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: SizedBox(
-                    height: 600,
-                    
-                    child: ListView.builder(
-                      itemCount: players.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(5),
-                          padding: EdgeInsets.all(12),
-                    
-                          decoration: BoxDecoration(color: Colors.white70,
-                          borderRadius: BorderRadius.circular(12)),
-                          child: Center(
-                            child: Text(players[index]),
-                          ),
-                          
-                        );
-                      },
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(child: Text(players[index])),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-
-
-
-
-
-
-
-
-                
 
                 const SizedBox(height: 16),
 
@@ -201,16 +188,11 @@ class _LuckeySpinState extends State<LuckeySpin> {
                     angle: rotation,
                     child: WheelSpin(),
                   ), // image...
-
-                  
-
                   // ResultBanner(prize: result),
                   SizedBox(height: 30),
 
                   ElevatedButton(
-                    onPressed:
-                        prizes.isEmpty ||
-                            players.isEmpty 
+                    onPressed: prizes.isEmpty || players.isEmpty
                         ? null
                         : () {
                             hadleSpin();
