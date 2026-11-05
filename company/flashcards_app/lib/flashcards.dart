@@ -1,6 +1,7 @@
 import 'package:flashcards_app/flashcard_data.dart';
 import 'package:flashcards_app/quiz_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Flashcards extends StatefulWidget {
   const new({super.key});
@@ -11,6 +12,7 @@ class Flashcards extends StatefulWidget {
 
 class _FlashcardsState extends State<Flashcards> {
   String selectedType = 'Bussness English';
+  int totalQuestions = 0;
 
   // List<Map<String, String>> get flashcards {
   //   return flashcardData[selectedType] ?? [];
@@ -24,7 +26,7 @@ class _FlashcardsState extends State<Flashcards> {
       appBar: AppBar(
         title: Text(
           'Vocabolary Learning',
-          style: TextStyle(
+          style: GoogleFonts.openSans(
             fontWeight: FontWeight.bold,
             fontSize: 26,
             color: Colors.white,
@@ -32,7 +34,12 @@ class _FlashcardsState extends State<Flashcards> {
         ),
         centerTitle: true,
         backgroundColor: Colors.blueGrey[900],
+        automaticallyImplyLeading: false,
       ),
+
+
+
+
       body: Padding(
         padding: EdgeInsetsGeometry.all(16),
         child: Column(
@@ -81,6 +88,7 @@ class _FlashcardsState extends State<Flashcards> {
                         typeName: selectedType,
                         flashcards: flashcardData[selectedType] ?? [],
                         options: flashcardOptions[selectedType] ?? [],
+                        totalQuestions: flashcardData[selectedType]!.length,
                       ),
                     ),
                   );

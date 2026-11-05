@@ -1,5 +1,4 @@
 import 'package:flashcards_app/flashcards.dart';
-import 'package:flashcards_app/quiz_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
