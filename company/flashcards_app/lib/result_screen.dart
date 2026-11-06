@@ -2,6 +2,7 @@ import 'package:flashcards_app/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class ResultScreen extends StatefulWidget {
   final String typeName;
   final List<Map<String, String>> userAnswers;
@@ -186,9 +187,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     MaterialPageRoute(
                       builder: (context) => QuizScreen(
                         typeName: widget.typeName,
-                        flashcards: wrongFlashcards,
-                        options: wrongOptions,
-                        totalQuestions: wrongFlashcards.length,
+                        // flashcards: wrongFlashcards,
+                        // options: wrongOptions,
+                        // totalQuestions: wrongFlashcards.length,
                       ),
                     ),
                   );

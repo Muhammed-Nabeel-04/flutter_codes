@@ -78,17 +78,29 @@ class _FlashcardsState extends State<Flashcards> {
 
             SizedBox(height: 30),
 
+            Text(questiondataBussnes[0].question),
+
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
+                      // builder: (context) => QuizScreen(
+                      //   typeName: selectedType,
+                      //   flashcards: flashcardData[selectedType] ?? [],
+                      //   options: flashcardOptions[selectedType] ?? [],
+                      //   totalQuestions: flashcardData[selectedType]!.length,
+                      // ),
+
+
+                      
+
                       builder: (context) => QuizScreen(
                         typeName: selectedType,
-                        flashcards: flashcardData[selectedType] ?? [],
-                        options: flashcardOptions[selectedType] ?? [],
-                        totalQuestions: flashcardData[selectedType]!.length,
+                        // flashcards: flashcardData[selectedType] ?? [],
+                        // options: flashcardOptions[selectedType] ?? [],
+                        // totalQuestions: flashcardData[selectedType]!.length,
                       ),
                     ),
                   );

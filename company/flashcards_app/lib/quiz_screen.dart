@@ -1,19 +1,21 @@
 import 'package:flashcards_app/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flashcards_app/flashcard_data.dart';
+
 
 class QuizScreen extends StatefulWidget {
   final String typeName;
-  final List<Map<String, String>> flashcards;
-  final List<Map<String, String>> options;
-  final int totalQuestions ;
+  // final List<Map<String, String>> flashcards;
+  // final Map<String, String> options;
+  // final int totalQuestions ;
 
   const new({
     super.key,
     required this.typeName,
-    required this.flashcards,
-    required this.options,
-    required this.totalQuestions
+    // required this.flashcards,
+    // required this.options,
+    // required this.totalQuestions
   });
 
   @override
@@ -35,7 +37,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void shufledoptions() {
-    final optionData = widget.options[currentindex];
+    final optionData = questiondataBussnes[currentindex].options;
     shuffled = ['A', 'B', 'C', 'D']
         .map((letter) => MapEntry(letter, optionData['option $letter'] ?? ''))
         .toList();
@@ -85,7 +87,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         Row(
                           children: [
                             Text(
-                              widget.flashcards[currentindex]['word'] ?? '',
+                              questiondataBussnes[currentindex].question,
                               style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
@@ -125,7 +127,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
 
                         Text(
-                          widget.flashcards[currentindex]['example'] ?? '',
+                          questiondataBussnes[currentindex].example,
                           style: TextStyle(fontSize: 18),
                         ),
                       ],
@@ -176,14 +178,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                   selectedOption = option.key;
                                   userAnswers.add({
                                     'word':
-                                        widget
-                                            .flashcards[currentindex]['word'] ??
-                                        '',
+                                        questiondataBussnes[currentindex].question,
                                     'selected': option.value,
                                     'correctanswer':
-                                        widget
-                                            .options[currentindex]['option ${widget.options[currentindex]['answer']}'] ??
-                                        '',
+                                       questiondataBussnes[currentindex].correctanswer,
                                   });
                                 });
                               }
@@ -212,7 +210,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
 
               if (showExapmle) ...[
-                Text(widget.flashcards[currentindex]['example'] ?? ''),
+                Text(questiondataBussnes[currentindex].question),
                 SizedBox(height: 20),
               ],
 
@@ -233,7 +231,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   //   child: Text('Previous'),
                   // ),
 
-                  if (currentindex < widget.flashcards.length - 1)
+                  if (currentindex < questiondataBussnes.length - 1)
                     ElevatedButton(
                       onPressed: selectedOption != null
                           ? () {
@@ -262,24 +260,25 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                     ),
 
-                  if (currentindex == widget.flashcards.length - 1)
+                  if (currentindex == questiondataBussnes.length - 1)
                     ElevatedButton(
-                      onPressed: selectedOption != null
-                          ? () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ResultScreen(
-                                    typeName: widget.typeName,
-                                    userAnswers: userAnswers,
-                                    flashcards: widget.flashcards,
-                                    options: widget.options,
-                                    totalQuestions: widget.totalQuestions,
-                                  ),
-                                ),
-                              );
-                            }
-                          : null,
+                      onPressed : (){},
+                      // onPressed: selectedOption != null
+                          // ? () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => ResultScreen(
+                          //           typeName: widget.typeName,
+                          //           userAnswers: userAnswers,
+                          //           flashcards: widget.flashcards,
+                          //           options: widget.options,
+                          //           totalQuestions: widget.totalQuestions,
+                          //         ),
+                          //       ),
+                          //     );
+                          //   }
+                          // : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black87,
                       ),
@@ -299,7 +298,7 @@ class _QuizScreenState extends State<QuizScreen> {
               SizedBox(height: 20),
 
               Text(
-                'Question ${currentindex + 1} of ${widget.flashcards.length}',
+                'Question ${currentindex + 1} of ${questiondataBussnes.length}',
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
             ],
