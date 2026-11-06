@@ -181,19 +181,23 @@ class _QuizScreenState extends State<QuizScreen> {
                                 setState(() {
                                   selectedOption = option.key;
                                   userAnswers.add({
-                                    'word':
+                                    'question':
                                         widget.flashcards[currentindex].question,
-                                    'selected': option.value,
+                                    'selectedanswer': option.value,
                                     'correctanswer':
                                        widget.flashcards[currentindex].correctanswer,
                                   });
+
+                                  // example :- 
+                                  // [{
+                                  //   'question' : 'djdujecke',
+                                  //   'selectedanswer' : 'hdyieokangdt'
+                                  //   'correctanswer' : 'jdyueoncgdt'
+                                  // }]
+
                                 });
                               }
                             : null,
-
-                        // tileColor: selectedOption == option.key
-                        //     ? Colors.blue
-                        //     : Colors.blueGrey,
                       ),
                     ),
                   ],

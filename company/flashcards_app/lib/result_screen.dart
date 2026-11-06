@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
+
 class ResultScreen extends StatefulWidget {
   final String typeName;
   final List<Map<String, String>> userAnswers;
@@ -29,7 +30,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     final int correctAnswers = widget.userAnswers
-        .where((answer) => answer['selected'] == answer['correctanswer'])
+        .where((answer) => answer['selectedanswer'] == answer['correctanswer'])
         .length;
 
     final int wrongAnswer = widget.totalQuestions - correctAnswers;
@@ -39,22 +40,18 @@ class _ResultScreenState extends State<ResultScreen> {
         .asMap()
         .entries
         .where(
-          (entry) => entry.value['selected'] != entry.value['correctanswer'],
+          (entry) => entry.value['selectedanswer'] != entry.value['correctanswer'],
         )
         .map((entry) => entry.key)
         .toList();
+        // example :- 
+        // wrongIndexes = [0,3];
 
     final wrongFlashcards = wrongIndexes
         .map((index) => widget.flashcards[index])
         .toList();
+        // save the questions to wrongFlashcards
         
-    final wrongOptions = wrongIndexes
-        .map((index) => widget.options[index])
-        .toList();
-
-    // final wrongAnswers = widget.userAnswers
-    //     .where((answer) => answer['selected'] != answer['correctanswer'])
-    //     .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -138,13 +135,13 @@ class _ResultScreenState extends State<ResultScreen> {
                     ...widget.userAnswers
                         .where(
                           (answer) =>
-                              answer['selected'] != answer['correctanswer'],
+                              answer['selectedanswer'] != answer['correctanswer'],
                         )
                         .map(
                           (answer) => Card(
                             child: ListTile(
                               title: Text(
-                                answer['word'] ?? '',
+                                answer['question'] ?? '',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Column(
@@ -154,7 +151,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     children: [
                                       Text('Your answer: '),
                                       Text(
-                                        '${answer['selected']}',
+                                        '${answer['selectedanswer']}',
                                         style: TextStyle(color: Colors.red),
                                       ),
                                     ],
@@ -190,7 +187,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       builder: (context) => QuizScreen(
                         typeName: widget.typeName,
                         flashcards: wrongFlashcards,
-                        options: wrongOptions,
+                        options: wrongFlashcards,
                         totalQuestions: wrongFlashcards.length,
                       ),
                     ),
@@ -200,6 +197,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 label: Text('Try Again'),
               ),
             ],
+            SafeArea(child: SizedBox(height: 20))
           ],
         ),
       ),
