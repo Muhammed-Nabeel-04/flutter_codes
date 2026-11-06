@@ -78,32 +78,42 @@ class _FlashcardsState extends State<Flashcards> {
 
             SizedBox(height: 30),
 
-            Text(questiondataBussnes[0].question),
+            // Text(questiondataBussnes[0].question),
 
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
+
+                  if (selectedType == 'Tech Terms'){
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      // builder: (context) => QuizScreen(
-                      //   typeName: selectedType,
-                      //   flashcards: flashcardData[selectedType] ?? [],
-                      //   options: flashcardOptions[selectedType] ?? [],
-                      //   totalQuestions: flashcardData[selectedType]!.length,
-                      // ),
-
-
-                      
-
                       builder: (context) => QuizScreen(
                         typeName: selectedType,
-                        // flashcards: flashcardData[selectedType] ?? [],
-                        // options: flashcardOptions[selectedType] ?? [],
-                        // totalQuestions: flashcardData[selectedType]!.length,
+                        flashcards: questiondataTech,
+                        options: questiondataTech,
+                        totalQuestions: questiondataTech.length,
                       ),
                     ),
                   );
+                  }
+                  else {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizScreen(
+                        typeName: selectedType,
+                        flashcards: questiondataBussnes,
+                        options: questiondataBussnes,
+                        totalQuestions: questiondataBussnes.length,
+                      ),
+                    ),
+                  );
+                  }
+
+
+                      
+                    
                 },
                 icon: Icon(Icons.play_arrow),
                 label: Text('Start'),
