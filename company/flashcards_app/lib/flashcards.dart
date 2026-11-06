@@ -91,8 +91,6 @@ class _FlashcardsState extends State<Flashcards> {
                       builder: (context) => QuizScreen(
                         typeName: selectedType,
                         flashcards: questiondataTech,
-                        options: questiondataTech,
-                        totalQuestions: questiondataTech.length,
                       ),
                     ),
                   );
@@ -104,8 +102,6 @@ class _FlashcardsState extends State<Flashcards> {
                       builder: (context) => QuizScreen(
                         typeName: selectedType,
                         flashcards: questiondataBussnes,
-                        options: questiondataBussnes,
-                        totalQuestions: questiondataBussnes.length,
                       ),
                     ),
                   );

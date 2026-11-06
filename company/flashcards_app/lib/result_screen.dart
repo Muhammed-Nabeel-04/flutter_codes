@@ -1,25 +1,25 @@
+import 'package:flashcards_app/flashcard_data.dart';
 import 'package:flashcards_app/question_model.dart';
 import 'package:flashcards_app/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+int correctAnswers = 0;
 
 
 class ResultScreen extends StatefulWidget {
   final String typeName;
-  final List<Map<String, String>> userAnswers;
-  
+  final List<AnswerModel> userAnswers;
+
   final List<QuestionModel> flashcards;
-  final List<QuestionModel> options;
-  final int totalQuestions;
+  // final int totalQuestions;
 
   const new({
     super.key,
     required this.typeName,
     required this.userAnswers,
-    required this.options,
     required this.flashcards,
-    required this.totalQuestions,
+    // required this.totalQuestions,
   });
 
   @override
@@ -29,29 +29,35 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
-    final int correctAnswers = widget.userAnswers
-        .where((answer) => answer['selectedanswer'] == answer['correctanswer'])
+    final int lengthof = widget.typeName == 'Bussness English'
+        ? questiondataBussnes.length
+        : questiondataTech.length;
+
+     correctAnswers += widget.userAnswers
+        .where((answer) => answer.isCorrect)
         .length;
 
-    final int wrongAnswer = widget.totalQuestions - correctAnswers;
-    final double percentage = (correctAnswers / widget.totalQuestions) * 100;
+        
+
+    final int wrongAnswer = lengthof - correctAnswers;
+
+    final double percentage = (correctAnswers / lengthof) * 100;
 
     final wrongIndexes = widget.userAnswers
         .asMap()
         .entries
         .where(
-          (entry) => entry.value['selectedanswer'] != entry.value['correctanswer'],
+          (entry) => entry.value.selectedanswer != entry.value.correctanswer,
         )
         .map((entry) => entry.key)
         .toList();
-        // example :- 
-        // wrongIndexes = [0,3];
+    // example :-
+    // wrongIndexes = [0,3];
 
     final wrongFlashcards = wrongIndexes
         .map((index) => widget.flashcards[index])
         .toList();
-        // save the questions to wrongFlashcards
-        
+    // save the questions to wrongFlashcards.
 
     return Scaffold(
       appBar: AppBar(
@@ -70,9 +76,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
       body: Padding(
         padding: EdgeInsetsGeometry.all(16),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               widget.typeName,
@@ -110,7 +116,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(widget.totalQuestions.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
+                        Text(lengthof.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
 
                         Text(correctAnswers.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
 
@@ -135,13 +141,13 @@ class _ResultScreenState extends State<ResultScreen> {
                     ...widget.userAnswers
                         .where(
                           (answer) =>
-                              answer['selectedanswer'] != answer['correctanswer'],
+                              answer.selectedanswer != answer.correctanswer,
                         )
                         .map(
                           (answer) => Card(
                             child: ListTile(
                               title: Text(
-                                answer['question'] ?? '',
+                                answer.question,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Column(
@@ -151,7 +157,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     children: [
                                       Text('Your answer: '),
                                       Text(
-                                        '${answer['selectedanswer']}',
+                                        answer.selectedanswer,
                                         style: TextStyle(color: Colors.red),
                                       ),
                                     ],
@@ -161,7 +167,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     children: [
                                       Text('Correct Answer: '),
                                       Text(
-                                        '${answer['correctanswer']}',
+                                        answer.correctanswer,
                                         style: TextStyle(color: Colors.green),
                                       ),
                                     ],
@@ -187,8 +193,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       builder: (context) => QuizScreen(
                         typeName: widget.typeName,
                         flashcards: wrongFlashcards,
-                        options: wrongFlashcards,
-                        totalQuestions: wrongFlashcards.length,
+                        // totalQuestions: widget.flashcards.length,
                       ),
                     ),
                   );
@@ -197,10 +202,12 @@ class _ResultScreenState extends State<ResultScreen> {
                 label: Text('Try Again'),
               ),
             ],
-            SafeArea(child: SizedBox(height: 20))
+            SafeArea(child: SizedBox(height: 20)),
           ],
         ),
       ),
     );
   }
 }
+
+// int numofquestions = 0;

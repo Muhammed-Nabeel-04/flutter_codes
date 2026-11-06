@@ -2,21 +2,19 @@ import 'package:flashcards_app/question_model.dart';
 import 'package:flashcards_app/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:flashcards_app/flashcard_data.dart';
 
+// import 'package:flashcards_app/flashcard_data.dart';
 
 class QuizScreen extends StatefulWidget {
   final String typeName;
   final List<QuestionModel> flashcards;
-  final List<QuestionModel> options;
-  final int totalQuestions ;
+  // final int totalQuestions;
 
   const new({
     super.key,
     required this.typeName,
     required this.flashcards,
-    required this.options,
-    required this.totalQuestions
+    // required this.totalQuestions,
   });
 
   @override
@@ -27,9 +25,9 @@ class _QuizScreenState extends State<QuizScreen> {
   int currentindex = 0;
   bool showExapmle = false;
   bool flipCard = false;
-  late List<MapEntry<String, String>> shuffled;
+  late List<String> shuffled;
   String? selectedOption;
-  List<Map<String, String>> userAnswers = [];
+  List<AnswerModel> userAnswers = [];
 
   @override
   void initState() {
@@ -37,14 +35,15 @@ class _QuizScreenState extends State<QuizScreen> {
     shufledoptions();
   }
 
+
+
   void shufledoptions() {
-    final optionData = widget.options[currentindex].options;
-    shuffled = ['A', 'B', 'C', 'D']
-        .map((letter) => MapEntry(letter, optionData['option $letter'] ?? ''))
-        .toList();
+    final optionData = widget.flashcards[currentindex].options;
+    shuffled = optionData.values.toList();
     shuffled.shuffle();
-  } // ('A' , "kknknknjkkmknkjnk",
-  //  'B' , "iuhiuhihjygiuhlkj")
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +121,6 @@ class _QuizScreenState extends State<QuizScreen> {
                               onPressed: () {
                                 setState(() {
                                   flipCard = !flipCard;
-                                  
                                 });
                               },
                               icon: Icon(Icons.flip_camera_android),
@@ -167,7 +165,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: selectedOption == option.key
+                        color: selectedOption == option
                             ? Colors.blue
                             : Colors.blueGrey,
                       ),
@@ -175,25 +173,30 @@ class _QuizScreenState extends State<QuizScreen> {
                         leading: CircleAvatar(
                           child: Text(String.fromCharCode(65 + index)),
                         ),
-                        title: Text(option.value),
+                        title: Text(option),
                         onTap: selectedOption == null
                             ? () {
                                 setState(() {
-                                  selectedOption = option.key;
-                                  userAnswers.add({
-                                    'question':
-                                        widget.flashcards[currentindex].question,
-                                    'selectedanswer': option.value,
-                                    'correctanswer':
-                                       widget.flashcards[currentindex].correctanswer,
-                                  });
+                                  selectedOption = option;
 
-                                  // example :- 
-                                  // [{
-                                  //   'question' : 'djdujecke',
-                                  //   'selectedanswer' : 'hdyieokangdt'
-                                  //   'correctanswer' : 'jdyueoncgdt'
-                                  // }]
+
+
+
+
+                                  userAnswers.add(
+                                    AnswerModel(
+                                      question: widget
+                                          .flashcards[currentindex]
+                                          .question,
+                                      selectedanswer: option,
+                                      correctanswer: widget
+                                          .flashcards[currentindex]
+                                          .correctanswer,
+                                    ),
+                                  );
+
+
+
 
                                 });
                               }
@@ -272,6 +275,8 @@ class _QuizScreenState extends State<QuizScreen> {
                     ElevatedButton(
                       onPressed: selectedOption != null
                           ? () {
+                              // answer(userAnswers);
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -279,8 +284,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                     typeName: widget.typeName,
                                     userAnswers: userAnswers,
                                     flashcards: widget.flashcards,
-                                    options: widget.options,
-                                    totalQuestions: widget.totalQuestions,
+                                    // totalQuestions: widget.totalQuestions,
                                   ),
                                 ),
                               );
