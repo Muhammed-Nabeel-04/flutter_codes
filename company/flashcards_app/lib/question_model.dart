@@ -19,7 +19,9 @@ class AnswerModel{
   final String selectedanswer;
   final String correctanswer;
   bool get isCorrect => selectedanswer == correctanswer;
-
+  // bool isCorect (){
+  //   return selectedanswer == correctanswer;
+  // }
 
   AnswerModel({
     required this.question,

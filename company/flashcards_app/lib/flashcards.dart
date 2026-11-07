@@ -13,6 +13,7 @@ class Flashcards extends StatefulWidget {
 class _FlashcardsState extends State<Flashcards> {
   String selectedType = 'Bussness English';
   int totalQuestions = 0;
+  int currentscreen = 0;
 
   // List<Map<String, String>> get flashcards {
   //   return flashcardData[selectedType] ?? [];
@@ -78,12 +79,11 @@ class _FlashcardsState extends State<Flashcards> {
 
             SizedBox(height: 30),
 
-            // Text(questiondataBussnes[0].question),
 
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
-
+                  currentscreen ++;
                   if (selectedType == 'Tech Terms'){
                   Navigator.push(
                     context,
@@ -102,6 +102,7 @@ class _FlashcardsState extends State<Flashcards> {
                       builder: (context) => QuizScreen(
                         typeName: selectedType,
                         flashcards: questiondataBussnes,
+                        
                       ),
                     ),
                   );

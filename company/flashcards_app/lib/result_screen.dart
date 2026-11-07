@@ -88,7 +88,7 @@ class _ResultScreenState extends State<ResultScreen> {
             SizedBox(height: 25),
 
             Text(
-              '${percentage.toString()} %',
+              '${percentage.toStringAsFixed(1)} %',
               style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
             ),
 
