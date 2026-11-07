@@ -38,7 +38,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           children: [
             Text('Status: ${widget.task.done ? 'Done' : 'Pending'}'),
             const SizedBox(height: 8),
-            Text('Note: ${widget.task.note!.toUpperCase()}'),
+            Text('Note: ${widget.task.note == null ? 'null'  : widget.task.note!.toUpperCase()}'),
             const SizedBox(height: 8),
             Text(_history),
           ],

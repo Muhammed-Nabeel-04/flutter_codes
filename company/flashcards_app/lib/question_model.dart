@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class QuestionModel {
   final String question;
   final Map<String, String> options;
@@ -28,6 +30,12 @@ class AnswerModel{
     required this.selectedanswer,
     required this.correctanswer
   });
+
+
+
+
+
+
 }
 
 

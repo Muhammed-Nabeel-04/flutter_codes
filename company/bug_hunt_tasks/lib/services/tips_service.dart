@@ -17,10 +17,10 @@ class TipsService {
     return 'Tip: hot reload keeps state, hot restart resets it.';
   }
 
-  String tipCountLabel() {
+  int tipCountLabel() {
     final Map<String, dynamic> data = jsonDecode(_tipsJson);
-    final count = data['count'] as String;
-    return '$count tips available';
+    final int count = data['count'] as int;
+    return count;
   }
 
   List<String> allTips() {
@@ -28,3 +28,5 @@ class TipsService {
     return List<String>.from(data['tips']);
   }
 }
+
+

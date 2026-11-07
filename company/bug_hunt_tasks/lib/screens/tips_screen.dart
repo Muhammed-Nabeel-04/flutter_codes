@@ -21,7 +21,7 @@ class _TipsScreenState extends State<TipsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_service.tipCountLabel())),
+      appBar: AppBar(title: Text('${_service.tipCountLabel()} tips available')),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -33,7 +33,10 @@ class _TipsScreenState extends State<TipsScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _nextTip,
+
+        onPressed: _service.tipCountLabel() != _index ? _nextTip : _nextTip
+        
+        ,
         label: const Text('Next tip'),
         icon: const Icon(Icons.arrow_forward),
       ),

@@ -67,6 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openLastViewed() {
+    if (_lastViewed == null){
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => TaskDetailsScreen(task: _lastViewed!)),
     );
@@ -81,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     if (_tasks.isEmpty) {
       setState(() {
         _status = 'All tasks cleared!';
@@ -94,7 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.lightbulb_outline),
             tooltip: 'Tips',
-            onPressed: () => Navigator.of(context).push(
+            onPressed: () => 
+            Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const TipsScreen()),
             ),
           ),
@@ -107,10 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Image.asset('assets/images/logo.png', height: 80)),
+          Center(child: Image.asset('assets/images/logo.png', height: 80, width: 80,)),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Row(
+            child: Wrap(
               children: [
                 const Icon(Icons.bug_report, size: 32),
                 const SizedBox(width: 8),
@@ -131,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(16),
               child: Text(_status),
             ),
+            
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Wrap(
@@ -152,18 +158,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          ListView.builder(
-            itemCount: _tasks.length,
-            itemBuilder: (ctx, index) {
-              final task = _tasks[index];
-              return TaskTile(
-                task: task,
-                onChanged: (value) => setState(() => task.done = value),
-                onDelete: () => setState(() => _tasks.removeAt(index)),
-                onTap: () => _openDetails(task),
-              );
-            },
-          ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _tasks.length,
+                itemBuilder: (ctx, index) {
+                  final task = _tasks[index];
+                  return TaskTile(
+                    task: task,
+                    onChanged: (value) => setState(() => task.done = value),
+                    onDelete: () => setState(() => _tasks.removeAt(index)),
+                    onTap: () => _openDetails(task),
+                  );
+                },
+              ),
+            ),
+          
         ],
       ),
     );
