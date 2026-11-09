@@ -15,7 +15,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Task> _tasks = [
-    Task(title: 'Install Flutter', done: true, note: 'flutter doctor should be green'),
+    Task(
+        title: 'Install Flutter',
+        done: true,
+        note: 'flutter doctor should be green'),
     Task(title: 'Build the Roll Dice app'),
     Task(title: 'Build the Quiz app', note: 'Use map() for the answer buttons'),
     Task(title: 'Read about widget keys'),
@@ -25,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Task? _lastViewed;
   String _status = '';
 
-  int get _completedCount => _tasks.where((t) => !t.done).length;
+  int get _completedCount => _tasks.where((t) => t.done).length;
 
   void _addTask() {
     showDialog(
@@ -38,13 +41,20 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(ctx),
+            onPressed: () {
+              setState(() {
+                _titleController.clear();
+              });
+              Navigator.pop(ctx);
+            },
             child: const Text('Cancel'),
           ),
           FilledButton(
             onPressed: () {
               setState(() {
+                if (_titleController.text.trim().isNotEmpty){
                 _tasks.add(Task(title: _titleController.text));
+                _titleController.clear();}
               });
               Navigator.pop(ctx);
             },
@@ -56,18 +66,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _clearCompleted() {
-    _tasks.removeWhere((t) => t.done);
+    setState(() {
+          _tasks.removeWhere((t) => t.done);
+    });
   }
 
   void _openDetails(Task task) {
-    _lastViewed = task;
+    setState(() {
+        _lastViewed = task;
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => TaskDetailsScreen(task: task)),
     );
+    });
   }
 
   void _openLastViewed() {
-    if (_lastViewed == null){
+    if (_lastViewed == null) {
       return;
     }
     Navigator.of(context).push(
@@ -75,16 +89,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showTip() {
-    final tip = _tipsService.loadTip();
+  Future<void> _showTip() async {
+    final tip = await _tipsService.loadTip();
     setState(() {
-      _status = '$tip';
+      _status = tip;
     });
+
+
+
+    
   }
+
+  int get compltedCount => _tasks.where((t) => t.done).length ;
 
   @override
   Widget build(BuildContext context) {
-    
     if (_tasks.isEmpty) {
       setState(() {
         _status = 'All tasks cleared!';
@@ -98,8 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.lightbulb_outline),
             tooltip: 'Tips',
-            onPressed: () => 
-            Navigator.of(context).push(
+            onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const TipsScreen()),
             ),
           ),
@@ -112,7 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Image.asset('assets/images/logo.png', height: 80, width: 80,)),
+          Center(
+              child: Image.asset(
+            'assets/images/logo.png',
+            height: 80,
+            width: 80,
+          )),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Wrap(
@@ -136,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(16),
               child: Text(_status),
             ),
-            
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Wrap(
@@ -144,35 +166,35 @@ class _HomeScreenState extends State<HomeScreen> {
               runSpacing: 8,
               children: [
                 OutlinedButton(
-                  onPressed: _clearCompleted,
+                  onPressed: compltedCount != 0 ? _clearCompleted : null,
                   child: const Text('Clear completed'),
                 ),
                 OutlinedButton(
-                  onPressed: _openLastViewed,
+                  onPressed: _lastViewed != null ? _openLastViewed : null,
                   child: const Text('Open last viewed'),
                 ),
                 OutlinedButton(
-                  onPressed: _showTip,
+                  onPressed: _status.isEmpty ? _showTip : null,
                   child: const Text('Show tip'),
                 ),
               ],
             ),
           ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _tasks.length,
-                itemBuilder: (ctx, index) {
-                  final task = _tasks[index];
-                  return TaskTile(
-                    task: task,
-                    onChanged: (value) => setState(() => task.done = value),
-                    onDelete: () => setState(() => _tasks.removeAt(index)),
-                    onTap: () => _openDetails(task),
-                  );
-                },
-              ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _tasks.length,
+              itemBuilder: (ctx, index) {
+                final task = _tasks[index];
+                return TaskTile(
+                  key: ValueKey("ansaf"),
+                  task: task,
+                  onChanged: (value) => setState(() => task.done = value),
+                  onDelete: () => setState(() => _tasks.removeAt(index)),
+                  onTap: () => _openDetails(task),
+                );
+              },
             ),
-          
+          ),
         ],
       ),
     );

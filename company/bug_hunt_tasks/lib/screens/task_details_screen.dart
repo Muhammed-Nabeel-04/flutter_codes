@@ -22,6 +22,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   Future<void> _loadHistory() async {
     await Future.delayed(const Duration(seconds: 3));
+    if (!mounted) return;
     setState(() {
       _history = 'Created today · edited 2 times';
     });
