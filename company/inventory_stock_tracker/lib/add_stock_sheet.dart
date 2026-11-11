@@ -175,7 +175,16 @@ class _AddStockSheetState extends State<AddStockSheet> {
 
           SizedBox(height: 15),
 
-          ElevatedButton(onPressed: addStock, child: Text('Add Stock')),
+          ElevatedButton(
+            onPressed: addStock,
+
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(
+                Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+            child: Text('Add Stock'),
+          ),
         ],
       ),
     );

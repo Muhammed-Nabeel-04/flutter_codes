@@ -10,13 +10,13 @@ class StockCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
       child: ListTile(
         contentPadding: EdgeInsets.all(12),
-        tileColor: Colors.grey[300],
+        // tileColor: Colors.grey[300],
+        tileColor: Theme.of(context).colorScheme.surface,
         leading: CircleAvatar(
           radius: 25,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
           child: Icon(Icons.inventory_2_outlined),
         ),
         title: Text(
@@ -32,8 +32,6 @@ class StockCard extends StatelessWidget {
         ]),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               "Qty: ${item.quantity}",
@@ -43,7 +41,7 @@ class StockCard extends StatelessWidget {
               item.quantity < 10 ? "Low Stock" : "In Stock",
               style: TextStyle(
                 fontSize: 12,
-                color: item.quantity < 10 ? Colors.red : Colors.green,
+                color: item.quantity < 10 ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.onError,
               ),
             ),
           ],
