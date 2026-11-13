@@ -47,7 +47,9 @@ class _AddStockSheetState extends State<AddStockSheet> {
         selectedWarehouse == null) {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
+
+
+        builder: (context) => AlertDialog.adaptive( // change 1.
           title: Text('Invalid Input'),
           content: Text('Please eneter valid Product details'),
           actions: [
@@ -57,6 +59,9 @@ class _AddStockSheetState extends State<AddStockSheet> {
             ),
           ],
         ),
+
+
+        
       );
       return;
     }
@@ -77,7 +82,9 @@ class _AddStockSheetState extends State<AddStockSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + MediaQuery.of(context).viewInsets.bottom),
+      // padding: EdgeInsetsGeometry.all(10),
+
       child: Column(
         mainAxisSize: MainAxisSize.min,
 

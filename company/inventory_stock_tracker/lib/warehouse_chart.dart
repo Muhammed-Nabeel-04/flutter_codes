@@ -4,7 +4,10 @@ import 'package:inventory_stock_tracker/products_data.dart';
 import 'package:inventory_stock_tracker/products_model.dart';
 
 class WarehouseChart extends StatelessWidget {
-  const new({super.key});
+  final bool isTablet;
+  const new({super.key,
+  required this.isTablet
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class WarehouseChart extends StatelessWidget {
     ].reduce((a, b) => a > b ? a : b);
 
     return Container(
-      height: 200,
+      height: isTablet ? 500 : 200,
       padding: EdgeInsets.all(10),
 
       child: BarChart(

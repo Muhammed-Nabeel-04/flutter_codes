@@ -17,7 +17,9 @@ class _MyAppState extends State<MyApp> {
 
   void toggleTheme() {
     setState(() {
-     themeMode = themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      themeMode = themeMode == ThemeMode.light
+          ? ThemeMode.dark
+          : ThemeMode.light;
     });
   }
 
@@ -26,8 +28,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: themeMode,
-
-
 
       theme: ThemeData(
         brightness: Brightness.light,
@@ -39,11 +39,9 @@ class _MyAppState extends State<MyApp> {
           secondary: Colors.blueGrey,
           tertiary: Colors.grey,
           error: Colors.red,
-          onError: Colors.green
+          onError: Colors.green,
         ),
       ),
-
-
 
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -55,13 +53,9 @@ class _MyAppState extends State<MyApp> {
           secondary: const Color.fromARGB(221, 46, 45, 45),
           tertiary: Colors.black87,
           error: Colors.red,
-          onError: Colors.green
-
+          onError: Colors.green,
         ),
       ),
-
-
-
 
       home: Inventoryscreen(
         isDarkMode: themeMode == ThemeMode.dark,
