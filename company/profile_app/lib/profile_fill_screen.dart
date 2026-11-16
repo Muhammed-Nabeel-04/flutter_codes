@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile_app/models.dart';
 import 'package:profile_app/models_data.dart';
-import 'package:profile_app/profile_show_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final DataModel? user;
@@ -72,12 +71,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       mailChecker();
     }
 
-    void discardAlert() {
-      if (dataModels.isNotEmpty) {
-        if (nameEditor.text.trim() != dataModels[0].name ||
+    bool hasChanges(){
+      if (dataModels.isEmpty) return true;
+
+      return (nameEditor.text.trim() != dataModels[0].name ||
             mailEditor.text.trim() != dataModels[0].mail ||
             phoneEditor.text.trim() != dataModels[0].phone ||
-            roleEditor.text.trim() != dataModels[0].role) {
+            roleEditor.text.trim() != dataModels[0].role);
+    }
+
+    void discardAlert() {
+      
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -85,7 +89,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               content: Text('Do You Want to Save changes'),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    Navigator.pop(context);
+                   Navigator.pop(context);
+                   } ,
                   child: Text('Discard'),
                 ),
 
@@ -100,94 +107,108 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
           return;
-        }
-      }else null;
+       
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Profile Screen",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if (hasChanges()) {
+         discardAlert();
+        }
+        else{
+          Navigator.pop(context);
+        }
+      },
+
+
+
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Profile Screen",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.blueGrey,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: Padding(
-        padding: EdgeInsetsGeometry.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          children: [
-            Text(
-              'Enter Your Details',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-
-            TextField(
-              controller: nameEditor,
-              decoration: InputDecoration(
-                label: Text('Name'),
-
-                border: OutlineInputBorder(),
-                hint: Text('Enter Name'),
+        body: Padding(
+          padding: EdgeInsetsGeometry.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+      
+            children: [
+              Text(
+                'Enter Your Details',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
-            ),
-
-            SizedBox(height: 16),
-            TextField(
-              controller: mailEditor,
-              decoration: InputDecoration(
-                label: Text('Email'),
-
-                border: OutlineInputBorder(),
-                hint: Text('Enter Email'),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: phoneEditor,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                label: Text('Phone'),
-
-                border: OutlineInputBorder(),
-                hint: Text('Enter phone'),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: roleEditor,
-              decoration: InputDecoration(
-                label: Text('Role'),
-                border: OutlineInputBorder(),
-                hint: Text('Enter Role'),
-              ),
-            ),
-            SizedBox(height: 16),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    discardAlert();
-                    Navigator.pop(context);
-                  },
-                  child: Text('Discard'),
+              SizedBox(height: 20),
+      
+              TextField(
+                controller: nameEditor,
+                decoration: InputDecoration(
+                  label: Text('Name'),
+      
+                  border: OutlineInputBorder(),
+                  hint: Text('Enter Name'),
                 ),
-
-                SizedBox(width: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    checkEmpty();
-                  },
-                  child: Text('Save'),
+              ),
+      
+              SizedBox(height: 16),
+              TextField(
+                controller: mailEditor,
+                decoration: InputDecoration(
+                  label: Text('Email'),
+      
+                  border: OutlineInputBorder(),
+                  hint: Text('Enter Email'),
                 ),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: phoneEditor,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  label: Text('Phone'),
+      
+                  border: OutlineInputBorder(),
+                  hint: Text('Enter phone'),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: roleEditor,
+                decoration: InputDecoration(
+                  label: Text('Role'),
+                  border: OutlineInputBorder(),
+                  hint: Text('Enter Role'),
+                ),
+              ),
+              SizedBox(height: 16),
+      
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     discardAlert();
+                  //     Navigator.pop(context);
+                  //   },
+                  //   child: Text('Discard'),
+                  // ),
+      
+                  SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      checkEmpty();
+                    },
+                    child: Text('Save'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

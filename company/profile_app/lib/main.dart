@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:profile_app/navigation_screen.dart';
 import 'package:profile_app/profile_fill_screen.dart';
 import 'package:profile_app/profile_show_screen.dart';
+import 'package:profile_app/settings_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: ProfileScreen(),
-      home: ProfileShowScreen(),
+      // home: ProfileShowScreen(),
+      // home: SettingsScreen(),
+      home : NavigationScreen()
     );
   }
 }
