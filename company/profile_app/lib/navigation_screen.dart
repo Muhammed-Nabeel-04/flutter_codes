@@ -4,7 +4,10 @@ import 'package:profile_app/profile_show_screen.dart';
 import 'settings_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
-  const new({super.key});
+  final VoidCallback toggle;
+  const new({super.key,
+  required this.toggle
+  });
 
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();
@@ -12,7 +15,6 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   int currentIndex =0 ;
-  List pages = [ProfileShowScreen() , SettingsScreen()];
 
 
  void reload() {
@@ -22,6 +24,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+  List pages = [ProfileShowScreen() , SettingsScreen(toggle: widget.toggle,)];
+
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,

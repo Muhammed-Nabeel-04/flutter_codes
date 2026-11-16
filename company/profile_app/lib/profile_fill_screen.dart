@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     bool hasChanges(){
-      if (dataModels.isEmpty) return true;
+      if (dataModels.isEmpty) return false;
 
       return (nameEditor.text.trim() != dataModels[0].name ||
             mailEditor.text.trim() != dataModels[0].mail ||

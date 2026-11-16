@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:profile_app/models.dart';
+import 'package:profile_app/models_data.dart';
 
 class SettingsScreen extends StatefulWidget {
-//  final VoidCallback reload;
+ final VoidCallback toggle;
   const new({super.key,
-  // required this.reload
+  required this.toggle
   });
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
-  SettingDetailsModel settings = SettingDetailsModel();
+  // SettingDetailsModel settings = SettingDetailsModel();
 
 
 class _SettingsScreenState extends State<SettingsScreen> {
@@ -58,6 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {
                   isDark = value;
                   settings.isDark = isDark;
+                  widget.toggle();
                 });
               },
             ),

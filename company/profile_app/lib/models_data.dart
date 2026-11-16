@@ -5,3 +5,10 @@ List<DataModel> dataModels = [
   
 
 ];
+
+
+  final SettingDetailsModel settings = SettingDetailsModel();
+
+
+
+String? profileimge ;  

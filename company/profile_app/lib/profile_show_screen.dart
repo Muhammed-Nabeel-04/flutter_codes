@@ -12,9 +12,7 @@ class ProfileShowScreen extends StatefulWidget {
 }
 
 class _ProfileShowScreenState extends State<ProfileShowScreen> {
-  bool isFilled = false;
-
-  SettingDetailsModel settings = SettingDetailsModel();
+  bool isFilled = dataModels.isNotEmpty;
 
   Future<void> addDetails() async {
     final newUser = await Navigator.push<DataModel>(
@@ -37,8 +35,6 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
     }
   }
 
- 
-
   // Future<void> settingsData() async{
   //   if (selectedIndex == 1){
   //   final result = await
@@ -54,26 +50,24 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
   // }
 
   int selectedIndex = 0;
+  int lang = settings.lang;
+  double textSize = settings.textSize;
+  bool isDark = settings.isDark;
 
   @override
   Widget build(BuildContext context) {
-    int lang = settings.lang;
-    double textSize = settings.textSize;
-    bool isDark = settings.isDark;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Profile Screen $textSize",
+          "Profile Screen",
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
             fontSize: 10 * textSize,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-        
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
 
       body: Padding(
@@ -81,18 +75,9 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ElevatedButton(onPressed: (){setState(() {
-              print(settings.lang);
-              print(settings.isDark);
-              print(settings.textSize);
-            });}, child: Text('reset')),
-
-
-
-
             if (isFilled) ...[
               Card(
-                color: Colors.grey,
+                color: Theme.of(context).colorScheme.tertiary,
 
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,7 +87,7 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
 
                       child: CircleAvatar(
                         radius: 55,
-                        backgroundColor: Colors.blueGrey,
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
 
                         child: Text(
                           dataModels[0].name
@@ -120,41 +105,41 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Container(
-                        width: 300,
-                        height: 250,
+                        // width: 300,
+                        // height: 250,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+                          padding: EdgeInsetsGeometry.all(16),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
 
                             children: [
-                              dataModels.isNotEmpty
-                                  ? Column(
+                              
+                                   Column(
                                       children: [
                                         Text(
                                           'Name: ${dataModels[0].name}',
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(fontSize: 10 * textSize, color: Theme.of(context).colorScheme.primary),
                                         ),
                                         Text(
                                           'Email: ${dataModels[0].mail}',
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(fontSize: 10 * textSize , color: Theme.of(context).colorScheme.primary),
                                         ),
                                         Text(
                                           'Phone: ${dataModels[0].phone}',
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(fontSize:10 * textSize , color: Theme.of(context).colorScheme.primary),
                                         ),
                                         Text(
                                           'Role: ${dataModels[0].role}',
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(fontSize:10 * textSize , color: Theme.of(context).colorScheme.primary),
                                         ),
                                       ],
                                     )
-                                  : Text('data'),
+                                  
                             ],
                           ),
                         ),
