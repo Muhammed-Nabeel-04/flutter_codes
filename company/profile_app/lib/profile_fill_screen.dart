@@ -12,8 +12,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isSaved = false;
-  // List  dataModels = [];
-
+  double textsize = settings.textSize;
   @override
   Widget build(BuildContext context) {
     late final nameEditor = TextEditingController(
@@ -71,43 +70,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       mailChecker();
     }
 
-    bool hasChanges(){
+    bool hasChanges() {
       if (dataModels.isEmpty) return false;
 
       return (nameEditor.text.trim() != dataModels[0].name ||
-            mailEditor.text.trim() != dataModels[0].mail ||
-            phoneEditor.text.trim() != dataModels[0].phone ||
-            roleEditor.text.trim() != dataModels[0].role);
+          mailEditor.text.trim() != dataModels[0].mail ||
+          phoneEditor.text.trim() != dataModels[0].phone ||
+          roleEditor.text.trim() != dataModels[0].role);
     }
 
     void discardAlert() {
-      
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Details are not Saved'),
-              content: Text('Do You Want to Save changes'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                   Navigator.pop(context);
-                   } ,
-                  child: Text('Discard'),
-                ),
-
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    checkEmpty();
-                  },
-                  child: Text('save'),
-                ),
-              ],
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Details are not Saved'),
+          content: Text('Do You Want to Save changes'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: Text('Discard'),
             ),
-          );
-          return;
-       
+
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                checkEmpty();
+              },
+              child: Text('save'),
+            ),
+          ],
+        ),
+      );
+      return;
     }
 
     return PopScope(
@@ -115,52 +112,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         if (hasChanges()) {
-         discardAlert();
-        }
-        else{
+          discardAlert();
+        } else {
           Navigator.pop(context);
         }
       },
-
-
 
       child: Scaffold(
         appBar: AppBar(
           title: Text(
             "Profile Screen",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+              fontSize: 13 * textsize,
+            ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         body: Padding(
           padding: EdgeInsetsGeometry.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-      
+
             children: [
               Text(
                 'Enter Your Details',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 13 * textsize,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 20),
-      
+
               TextField(
                 controller: nameEditor,
                 decoration: InputDecoration(
                   label: Text('Name'),
-      
+                  labelStyle: TextStyle(fontSize: 9 * textsize),
                   border: OutlineInputBorder(),
                   hint: Text('Enter Name'),
                 ),
               ),
-      
+
               SizedBox(height: 16),
               TextField(
                 controller: mailEditor,
                 decoration: InputDecoration(
                   label: Text('Email'),
-      
+                  labelStyle: TextStyle(fontSize: 9 * textsize),
                   border: OutlineInputBorder(),
                   hint: Text('Enter Email'),
                 ),
@@ -171,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   label: Text('Phone'),
-      
+                  labelStyle: TextStyle(fontSize: 9 * textsize),
                   border: OutlineInputBorder(),
                   hint: Text('Enter phone'),
                 ),
@@ -181,12 +182,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 controller: roleEditor,
                 decoration: InputDecoration(
                   label: Text('Role'),
+                  labelStyle: TextStyle(fontSize: 9 * textsize),
+
                   border: OutlineInputBorder(),
                   hint: Text('Enter Role'),
                 ),
               ),
               SizedBox(height: 16),
-      
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -197,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   //   },
                   //   child: Text('Discard'),
                   // ),
-      
+
                   SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: () {

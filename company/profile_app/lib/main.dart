@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile_app/models_data.dart';
 import 'package:profile_app/navigation_screen.dart';
-import 'package:profile_app/profile_fill_screen.dart';
-import 'package:profile_app/profile_show_screen.dart';
-import 'package:profile_app/settings_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,7 +36,7 @@ class _MyAppState extends State<MyApp> {
           seedColor: Colors.white70,
           brightness: Brightness.light,
           primary: Colors.black,
-          onPrimary: Colors.white,
+          onPrimary: const Color.fromARGB(255, 197, 197, 197),
           secondary: Colors.blueGrey,
           tertiary: Colors.grey,
           error: Colors.red,
@@ -49,13 +46,13 @@ class _MyAppState extends State<MyApp> {
 
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black87,
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white,
           brightness: Brightness.dark,
           primary: Colors.white,
-          onPrimary: Colors.black,
-          secondary: const Color.fromARGB(221, 46, 45, 45),
+          onPrimary:  const Color.fromARGB(255, 22, 21, 21),
+          secondary: const Color.fromARGB(221, 48, 40, 40),
           tertiary: Colors.black87,
           error: Colors.red,
           onError: Colors.green,

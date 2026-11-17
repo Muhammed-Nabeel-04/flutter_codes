@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:profile_app/profile_show_screen.dart';
-
 import 'settings_screen.dart';
 
 class NavigationScreen extends StatefulWidget {

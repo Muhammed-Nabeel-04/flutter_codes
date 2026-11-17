@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:profile_app/models.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:profile_app/models_data.dart';
 import 'package:profile_app/profile_fill_screen.dart';
-import 'package:profile_app/settings_screen.dart';
 
 class ProfileShowScreen extends StatefulWidget {
   const new({super.key});
@@ -15,7 +16,7 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
   bool isFilled = dataModels.isNotEmpty;
 
   Future<void> addDetails() async {
-    final newUser = await Navigator.push<DataModel>(
+    final newUser = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
@@ -35,6 +36,13 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
     }
   }
 
+  Future<void> pickImage() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() => profileimgePath = picked.path);
+    }
+  }
+
   // Future<void> settingsData() async{
   //   if (selectedIndex == 1){
   //   final result = await
@@ -42,14 +50,12 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
   //           selectedIndex = 0;
   //            if (result != null){
   //             setState(() {
-
   //             });
   //            }
   //   }
-
   // }
+  // int selectedIndex = 0;
 
-  int selectedIndex = 0;
   int lang = settings.lang;
   double textSize = settings.textSize;
   bool isDark = settings.isDark;
@@ -63,7 +69,7 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
-            fontSize: 10 * textSize,
+            fontSize: 13 * textSize,
           ),
         ),
         centerTitle: true,
@@ -77,7 +83,7 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
           children: [
             if (isFilled) ...[
               Card(
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.onPrimary,
 
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,19 +91,32 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
                     Padding(
                       padding: const EdgeInsets.all(20),
 
-                      child: CircleAvatar(
-                        radius: 55,
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                      child: GestureDetector(
+                        onTap: pickImage,
+                        child: CircleAvatar(
+                          radius: 55,
+                          backgroundColor: Theme.of(context)
+                              .colorScheme
+                              .secondary,
+                          backgroundImage: profileimgePath != null
+                              ? FileImage(File(profileimgePath!))
+                              : null,
 
-                        child: Text(
-                          dataModels[0].name
-                              .trim()
-                              .split(' ')
-                              .where((word) => word.isNotEmpty)
-                              .map((word) => word[0].toUpperCase())
-                              .take(2)
-                              .join(),
-                          style: TextStyle(fontSize: 30, color: Colors.white),
+                          child: profileimgePath == null
+                              ? Text(
+                                  dataModels[0].name
+                                      .trim()
+                                      .split(' ')
+                                      .where((word) => word.isNotEmpty)
+                                      .map((word) => word[0].toUpperCase())
+                                      .take(2)
+                                      .join(),
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                     ),
@@ -108,7 +127,7 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
                         // width: 300,
                         // height: 250,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.secondary,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
@@ -116,30 +135,47 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             // crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
-                              
-                                   Column(
-                                      children: [
-                                        Text(
-                                          'Name: ${dataModels[0].name}',
-                                          style: TextStyle(fontSize: 10 * textSize, color: Theme.of(context).colorScheme.primary),
-                                        ),
-                                        Text(
-                                          'Email: ${dataModels[0].mail}',
-                                          style: TextStyle(fontSize: 10 * textSize , color: Theme.of(context).colorScheme.primary),
-                                        ),
-                                        Text(
-                                          'Phone: ${dataModels[0].phone}',
-                                          style: TextStyle(fontSize:10 * textSize , color: Theme.of(context).colorScheme.primary),
-                                        ),
-                                        Text(
-                                          'Role: ${dataModels[0].role}',
-                                          style: TextStyle(fontSize:10 * textSize , color: Theme.of(context).colorScheme.primary),
-                                        ),
-                                      ],
-                                    )
-                                  
+                              Column(
+                                children: [
+                                  Text(
+                                    'Name: ${dataModels[0].name}',
+                                    style: TextStyle(
+                                      fontSize: 10 * textSize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Email: ${dataModels[0].mail}',
+                                    style: TextStyle(
+                                      fontSize: 10 * textSize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Phone: ${dataModels[0].phone}',
+                                    style: TextStyle(
+                                      fontSize: 10 * textSize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Role: ${dataModels[0].role}',
+                                    style: TextStyle(
+                                      fontSize: 10 * textSize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -150,10 +186,18 @@ class _ProfileShowScreenState extends State<ProfileShowScreen> {
               ),
               SizedBox(height: 10),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.tertiary,
+                ),
                 onPressed: () {
                   addDetails();
                 },
-                child: Text('Edit'),
+                child: Text(
+                  'Edit',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
               ),
             ] else ...[
               SizedBox(
