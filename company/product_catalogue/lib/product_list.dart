@@ -14,12 +14,12 @@ class ProductListScreen extends StatefulWidget {
 class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
-      // final p = products.firstWhere((p)=> p.id == int.parse(widget.id));
+      final p = products.firstWhere((p)=> p.category == widget.category);
 
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.id),
+        title: Text(widget.category),
         backgroundColor: Colors.amber,
       ),
       body: Padding(padding: EdgeInsetsGeometry.all(16),
