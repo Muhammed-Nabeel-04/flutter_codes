@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:product_catalogue/categories_widget.dart';
+import 'package:product_catalogue/widgets/grid_view_widget.dart';
 
 class CategoryScreen extends StatefulWidget {
   const new({super.key});
@@ -28,6 +28,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         backgroundColor: Colors.blueGrey,
         centerTitle: true,
       ),
+
+      
 
       body: Padding(
         padding: EdgeInsetsGeometry.all(16),

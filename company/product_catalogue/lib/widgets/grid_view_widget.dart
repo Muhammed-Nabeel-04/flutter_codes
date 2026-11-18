@@ -10,20 +10,11 @@ Widget categoriesWidget(String category, VoidCallback onTap) {
       child: Container(
         padding: EdgeInsets.all(16),
         alignment: Alignment.center,
-        child: Text(category, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))
-        
+        child: Text(
+          category,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
       ),
     ),
   );
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 }
