@@ -18,9 +18,26 @@ class ProductModel {
     required this.specifications,
     required this.offer,
     required this.imagePath,
-    required this.wished
+    required this.wished,
   });
 }
+
+class FilterModel {
+  bool stockFilterWidget;
+  double priceRangeWidget;
+  String? brandfilterWidget;
+
+  FilterModel({
+     this.stockFilterWidget = false,
+     this.priceRangeWidget = 1000,
+    this.brandfilterWidget,
+  });
+}
+
+// final FilterModel filterdetails = FilterModel();
+
+
+
 
 final products = [
   ProductModel(
@@ -37,7 +54,7 @@ final products = [
     },
     offer: 50,
     imagePath: 'assets/images/Headphone.avif',
-    wished: true
+    wished: true,
   ),
   ProductModel(
     id: 2,
@@ -49,8 +66,7 @@ final products = [
     specifications: {'bulb': 'Led', 'type': 'wireless', 'battery': '500 mah'},
     offer: 20,
     imagePath: 'assets/images/Lamp.avif',
-        wished: false
-
+    wished: false,
   ),
   ProductModel(
     id: 3,
@@ -62,8 +78,7 @@ final products = [
     specifications: {'size': 'Large', 'type': 'leather', 'meterial': 'cotton'},
     offer: 70,
     imagePath: 'assets/images/Bed.jpg',
-        wished: false
-
+    wished: false,
   ),
   ProductModel(
     id: 4,
@@ -75,7 +90,22 @@ final products = [
     specifications: {'meterial': 'Wood', "height": 30, 'Shape': "Square"},
     offer: 10,
     imagePath: 'assets/images/Table.avif',
-        wished: false
-
+    wished: false,
+  ),
+  ProductModel(
+    id: 5,
+    name: 'charger',
+    category: 'Electronics',
+    brand: 'Realme',
+    price: 1500,
+    stock: 0,
+    specifications: {
+      'Power': '18 W',
+      'type': 'Type A - Type C',
+      'Technology': 'QC3.0',
+    },
+    offer: 30,
+    imagePath: 'assets/images/Charger.jpg',
+    wished: true,
   ),
 ];
