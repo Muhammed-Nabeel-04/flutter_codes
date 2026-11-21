@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_catalogue/provider/filter_provider.dart';
+import 'package:product_catalogue/provider/product_provider.dart';
 import 'package:product_catalogue/widgets/list_tile_widget.dart';
 import 'package:product_catalogue/widgets/model.dart/product_model.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
 
     // final filterProvider = context.watch<FilterProvider>();
-    final finalFilter = context.watch<FilterProvider>().apply(products, widget.category);
+    final allProductItems =context.watch<ProductProvider>().items;
+    final finalFilter = context.watch<FilterProvider>().apply(allProductItems, widget.category);
 
 
     // final categoryFilter = products

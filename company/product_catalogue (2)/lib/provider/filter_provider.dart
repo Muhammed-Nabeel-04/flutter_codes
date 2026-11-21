@@ -35,6 +35,7 @@ class FilterProvider extends ChangeNotifier{
     _brand = null;
     notifyListeners();
   }
+  
 
   List<String> brandsDropdown(List<ProductModel>all, String category ){
      return all.where((p) => p.category == category)

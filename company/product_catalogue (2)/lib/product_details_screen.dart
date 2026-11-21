@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:product_catalogue/provider/product_provider.dart';
+import 'package:product_catalogue/provider/qoute_cart.provider.dart';
 import 'package:product_catalogue/provider/whishlist_provider.dart';
 import 'package:provider/provider.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class ProductDetailsScreen extends StatelessWidget {
   final String id;
   const new({super.key, required this.id});
 
-  @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
-}
-
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     // final item = products.firstWhere((p) => p.id == int.parse(widget.id));
     // bool wished = item.wished;
 
     final item = context.watch<ProductProvider>().items.firstWhere(
-      (p) => p.id == int.parse(widget.id),
+      (p) => p.id == int.parse(id),
     );
 
     return Scaffold(
@@ -30,9 +26,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         backgroundColor: Colors.white70,
         centerTitle: true,
         elevation: 100,
-        
-
-
 
         actions: [
           Consumer<WhishlistProvider>(
@@ -40,29 +33,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               onPressed: () => context.read<WhishlistProvider>().toggle(item),
               icon: Icon(
                 wish.isWhished(item) ? Icons.favorite : Icons.favorite_border,
-                color: wish.isWhished(item) ? Colors.red : Colors.brown,
+                color: wish.isWhished(item) ? Colors.red : Colors.brown, size: 28,
               ),
             ),
           ),
 
-          // IconButton(
-          //   onPressed: () {
-          //     setState(() {
-          //       wished = !wished;
-          //       item.wished = wished;
-          //     });
-          //   },
-          //   icon: Icon(Icons.favorite, size: 30),
-          //   color: wished ? Colors.red : Colors.brown,
-          // ),
+          Consumer<QouteCartProvider>(
+            builder: (context, cart, _) => IconButton(
+              onPressed: () {
+                cart.isCarted(item) ? cart.delete(item) :
+                context.read<QouteCartProvider>().addorIncrese(item);
+              },
+              icon: Icon(Icons.card_travel, size: 27,),
+              color: cart.isCarted(item) ? Colors.black : Colors.grey,
+            ),
+          ),
 
           Padding(padding: EdgeInsetsGeometry.all(8)),
         ],
       ),
-
-
-
-
 
       body: SingleChildScrollView(
         child: Column(

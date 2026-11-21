@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_catalogue/catalogue_screen.dart';
+import 'package:product_catalogue/qoute_cart.dart';
 import 'package:product_catalogue/wishlist.dart';
 
 class Navigation extends StatefulWidget {
@@ -11,7 +12,7 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int currentindex = 0;
-  List pages = [CategoryScreen(), Wishlist(),9];
+  List pages = [CategoryScreen(), Wishlist(),QouteCart()];
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class _NavigationState extends State<Navigation> {
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Catalogue'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite, color: Colors.red,), label: "Whishlist"),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite, color: Colors.red), label: "Whishlist"),
+          BottomNavigationBarItem(icon: Icon(Icons.card_travel), label: "Qoute Cart"),
         ],
       ),
       body: pages[currentindex],

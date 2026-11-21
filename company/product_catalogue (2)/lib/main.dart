@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalogue/provider/cart_provider.dart';
 import 'package:product_catalogue/provider/filter_provider.dart';
 import 'package:product_catalogue/provider/product_provider.dart';
+import 'package:product_catalogue/provider/qoute_cart.provider.dart';
 import 'package:product_catalogue/provider/whishlist_provider.dart';
 
 import 'package:product_catalogue/router.dart';
@@ -16,7 +16,7 @@ void main() {
 
 
         ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => QouteCartProvider()),
       ],
       child: const MyApp(),
     ),

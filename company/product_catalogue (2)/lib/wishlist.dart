@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:product_catalogue/provider/whishlist_provider.dart';
-import 'package:product_catalogue/widgets/model.dart/product_model.dart';
 import 'package:product_catalogue/widgets/list_tile_widget.dart';
 import 'package:provider/provider.dart';
 

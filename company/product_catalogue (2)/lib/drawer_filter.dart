@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_catalogue/provider/filter_provider.dart';
+import 'package:product_catalogue/provider/product_provider.dart';
 import 'package:product_catalogue/widgets/model.dart/product_model.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,8 @@ class DrawerFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     // final brandsDropdown =  context.watch<FilterProvider>().brandsDropdown(products, category);
     //  final filter = context.watch<FilterProvider>();
+
+    final allproductItems = context.watch<ProductProvider>().items;
 
 
     return Scaffold(
@@ -59,7 +62,7 @@ class DrawerFilter extends StatelessWidget {
               items: [
                 DropdownMenuItem(value: null, child: Text('All brands')),
 
-                ...context.watch<FilterProvider>().brandsDropdown(products, category).map(
+                ...context.watch<FilterProvider>().brandsDropdown(allproductItems, category).map(
                   (p) => DropdownMenuItem(value: p, child: Text(p)),
                 ),
                ],

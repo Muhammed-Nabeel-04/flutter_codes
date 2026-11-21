@@ -28,6 +28,5 @@ class WhishlistProvider extends ChangeNotifier{
       add(p);
     }
   }
-
   
 }
