@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalogue/widgets/model.dart/product_model.dart';
+import 'package:product_catalogue/model.dart/product_model.dart';
 
 class WhishlistProvider extends ChangeNotifier{
-  final List<ProductModel> _items = [...products.where((p)=> p.wished)];
+  // final List<ProductModel> _items = [...products.where((p)=> p.wished)];
+
+    final List<ProductModel> _items = [];
 
   List<ProductModel> get items=> List.unmodifiable(_items);
 

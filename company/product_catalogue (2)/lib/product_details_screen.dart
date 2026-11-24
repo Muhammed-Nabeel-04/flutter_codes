@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:product_catalogue/provider/product_provider.dart';
 import 'package:product_catalogue/provider/qoute_cart.provider.dart';
 import 'package:product_catalogue/provider/whishlist_provider.dart';
+import 'package:product_catalogue/qoute_cart.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {

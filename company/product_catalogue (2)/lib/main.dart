@@ -13,10 +13,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => WhishlistProvider()),
         ChangeNotifierProvider(create: (_) => FilterProvider()),
-
-
         ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider(create: (_) => QouteCartProvider()),
+       ChangeNotifierProvider(create: (_) => QouteCartProvider()),
       ],
       child: const MyApp(),
     ),

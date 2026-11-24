@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:product_catalogue/widgets/model.dart/product_model.dart';
+import 'package:product_catalogue/model.dart/product_model.dart';
 
 class FilterProvider extends ChangeNotifier{
   bool _inStockOnly = false;

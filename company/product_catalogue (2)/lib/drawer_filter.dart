@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:product_catalogue/provider/filter_provider.dart';
 import 'package:product_catalogue/provider/product_provider.dart';
-import 'package:product_catalogue/widgets/model.dart/product_model.dart';
+import 'package:product_catalogue/model.dart/product_model.dart';
 import 'package:provider/provider.dart';
 
 class DrawerFilter extends StatelessWidget {

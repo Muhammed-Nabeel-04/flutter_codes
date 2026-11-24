@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:product_catalogue/provider/filter_provider.dart';
 import 'package:product_catalogue/provider/product_provider.dart';
 import 'package:product_catalogue/widgets/list_tile_widget.dart';
-import 'package:product_catalogue/widgets/model.dart/product_model.dart';
 import 'package:provider/provider.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -15,8 +14,16 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  // List<ProductModel>? filterdItems;
 
+
+  @override
+  void initState() {
+    super.initState();
+     WidgetsBinding.instance.addPostFrameCallback((_){
+      context.read<FilterProvider>().reset();
+    }
+    );
+      }
 
 
 
@@ -25,7 +32,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
 
     // final filterProvider = context.watch<FilterProvider>();
-    final allProductItems =context.watch<ProductProvider>().items;
+    final allProductItems = context.watch<ProductProvider>().items;
     final finalFilter = context.watch<FilterProvider>().apply(allProductItems, widget.category);
 
 
@@ -55,6 +62,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     '/filters',
                     extra: widget.category,
                   );
+                  
                   context.pop();
 
                 },

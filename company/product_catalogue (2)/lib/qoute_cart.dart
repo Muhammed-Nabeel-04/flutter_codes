@@ -18,7 +18,10 @@ class QouteCart extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),
-      body: Padding(
+      body: 
+      
+      
+      Padding(
         padding: EdgeInsetsGeometry.all(16),
         child: ListView.separated(
           
