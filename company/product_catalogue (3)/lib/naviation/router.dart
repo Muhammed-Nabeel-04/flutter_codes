@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:product_catalogue/drawer_filter.dart';
+import 'package:product_catalogue/pages/drawer_filter.dart';
 // import 'package:product_catalogue/filter_screen.dart';
-import 'package:product_catalogue/navigation.dart';
-import 'package:product_catalogue/product_details_screen.dart';
-import 'package:product_catalogue/product_list.dart';
+import 'package:product_catalogue/naviation/navigation.dart';
+import 'package:product_catalogue/pages/product_details_screen.dart';
+import 'package:product_catalogue/pages/product_list.dart';
 
 final router = GoRouter(
   routes: [

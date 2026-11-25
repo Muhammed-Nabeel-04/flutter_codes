@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:product_catalogue/product_details_screen.dart';
+import 'package:product_catalogue/pages/product_details_screen.dart';
 
 class ListTileWidget extends StatefulWidget {
   final item;

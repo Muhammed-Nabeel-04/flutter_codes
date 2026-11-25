@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:product_catalogue/catalogue_screen.dart';
-import 'package:product_catalogue/qoute_cart.dart';
-import 'package:product_catalogue/wishlist.dart';
+import 'package:product_catalogue/pages/catalogue_screen.dart';
+import 'package:product_catalogue/pages/qoute_cart.dart';
+import 'package:product_catalogue/pages/wishlist.dart';
 
 class Navigation extends StatefulWidget {
   const new({super.key});
