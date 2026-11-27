@@ -50,7 +50,7 @@ class FormFillProvider extends ChangeNotifier {
       date: dateRange!,
       halfDay: halfDay,
       reason: controller.text.trim(),
-      numberOfDays: countLeaveDays(dateRange!, halfDay),
+      // numberOfDays: countLeaveDays(dateRange!, halfDay),
     );
   }
 

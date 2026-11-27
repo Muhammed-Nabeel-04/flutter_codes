@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:leave_request/data_model.dart';
+import 'package:leave_request/leave_repository.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:leave_request/form_fill_provider.dart';
 import 'package:provider/provider.dart';
@@ -147,16 +148,28 @@ class _FormFillScreenState extends State<FormFillScreen> {
                   ),
                   SizedBox(width: 30),
                   ElevatedButton(
-                    onPressed: () {
-                      // if (formWatch.controller.text.length >= 10 &&
-                      //     formWatch.dateRange != null &&
-                      //     formRead.leaveType != null) {
+                    // onPressed: () {
+                    //   // if (formWatch.controller.text.length >= 10 &&
+                    //   //     formWatch.dateRange != null &&
+                    //   //     formRead.leaveType != null) {
 
-                      if (formKey.currentState!.validate()) {
-                        final result = formRead.apply();
-                        context.pop(result);
-                      } else {
-                        null;
+                    //   if (formKey.currentState!.validate()) {
+                    //     final result = formRead.apply();
+                    //     context.pop(result);
+                    //   } else {
+                    //     null;
+                    //   }
+                    // },
+                    onPressed: () async{
+                      if (!formKey.currentState!.validate()) return;
+                      try{
+                        await LeaveRepository().addRequest(formRead.apply());
+                        if (!mounted) return;
+                        context.pop(true);
+                      }
+                      catch (e){
+                        if(!mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Could not save. Try again')));
                       }
                     },
                     child: Text('Apply'),
