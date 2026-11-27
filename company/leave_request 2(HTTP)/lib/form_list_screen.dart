@@ -14,8 +14,6 @@ class FormListScreen extends StatefulWidget {
 }
 
 class _FormListScreenState extends State<FormListScreen> {
-
-
   final repo = LeaveRepository();
   late Future<List<DataModel>> future;
 
@@ -25,18 +23,16 @@ class _FormListScreenState extends State<FormListScreen> {
     future = repo.fetchRequests();
   }
 
-  void reload(){
+  void reload() {
     setState(() {
       future = repo.fetchRequests();
     });
   }
 
-  String fmt(DateTime d)=> d.toString().split(' ')[0];
-
+  // String fmt(DateTime d) => d.toString().split(' ')[0];
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -53,171 +49,87 @@ class _FormListScreenState extends State<FormListScreen> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final result = await context.push<bool>(
-            '/formfill',
-            extra: null,
-          );
+          final result = await context.push<bool>('/formfill', extra: null);
           if (result == true) reload();
-
-          // if (result != null) {
-          //   // if (leaveRequestDetails.contains(result)){
-          //   //   final idx = leaveRequestDetails.indexOf(result);
-          //   //   leaveRequestDetails[idx] = result;
-          //   // }
-          //   // else{
-          //   setState(() {
-          //     leaveRequestDetails.add(result);
-          //   });
-          //   // }
-          // }
         },
+        
         child: Icon(Icons.add),
       ),
 
+      body: FutureBuilder(
+        future: future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Could not load requests"),
+                  const SizedBox(height: 12),
+                ],
+              ),
+            );
+          }
 
-    body: FutureBuilder(future: future, builder: (context, snapshot){
-      if (snapshot.connectionState == ConnectionState.waiting){
-        return const Center(child: CircularProgressIndicator(),);
-      }
+          final items = snapshot.data ?? [];
+          if (items.isEmpty) {
+            return const Center(child: Text('No leave request yet'));
+          }
 
-      if (snapshot.hasError){
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Could not load requests"),
-              const SizedBox(height: 12,)
-            ],
-          ),
-        );
-      }
-      final items = snapshot.data ?? [];
-      if(items.isEmpty){
-        return const Center(child: Text('No leave request yet'),);
+          return ListView.separated(
+            padding: EdgeInsets.all(16),
+            itemCount: items.length,
 
-      }
-
-      return ListView.separated(
-        padding: EdgeInsets.all(16),
-                        itemCount: items.length,
-
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 20),
-                itemBuilder: (context, idx) {
-                  final r = items[idx];
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color.fromARGB(179, 204, 203, 203),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        '${r.leaveType} Leave',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: context.watch<FormListProvider>().textColor(
-                            r.leaveType,
-                          ),
-                        ),
-                      ),
-                      // onTap: () async {
-                      //   final result = await context.push<DataModel>(
-                      //     '/formfill',
-                      //     extra: leaveRequestDetails[idx],
-                      //   );
-                      //   if (result != null) {
-                      //     leaveRequestDetails[idx] = result;
-                      //   }
-                      // },
-
-                      
-                      subtitle: Text(
-                        '${r.date.start.toString().split(' ')[0]}  to  ${r.date.end.toString().split(' ')[0]}',
-                      ),
-                      trailing: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            r.halfDay
-                                ? 'HALF DAY'
-                                : 'FULL DAY',
-                          ),
-                          Text(
-                            'Days: ${context.read<FormFillProvider>().countLeaveDays(r.date, r.halfDay)}',
-                          ),
-                        ],
+            separatorBuilder: (context, index) => const SizedBox(height: 20),
+            itemBuilder: (context, idx) {
+              final r = items[idx];
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: const Color.fromARGB(179, 204, 203, 203),
+                ),
+                child: ListTile(
+                  title: Text(
+                    '${r.leaveType} Leave',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: context.watch<FormListProvider>().textColor(
+                        r.leaveType,
                       ),
                     ),
-                  );
-                },
+                  ),
+                  // onTap: () async {
+                  //   final result = await context.push<DataModel>(
+                  //     '/formfill',
+                  //     extra: leaveRequestDetails[idx],
+                  //   );
+                  //   if (result != null) {
+                  //     leaveRequestDetails[idx] = result;
+                  //   }
+                  // },
+
+                  subtitle: Text(
+                    '${r.date.start.toString().split(' ')[0]}  to  ${r.date.end.toString().split(' ')[0]}',
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(r.halfDay ? 'HALF DAY' : 'FULL DAY'),
+                      Text(
+                        'Days: ${context.read<FormFillProvider>().countLeaveDays(r.date, r.halfDay)}',
+                      ),
+                    ],
+                  ),
+                ),
               );
-    }),
-
-
-
-
-      // body: Padding(
-      //   padding: EdgeInsetsGeometry.all(16),
-      //   child: Column(
-      //     children: [
-      //       Expanded(
-      //         child: ListView.separated(
-      //           separatorBuilder: (context, index) =>
-      //               const SizedBox(height: 20),
-      //           itemCount: leaveRequestDetails.length,
-      //           itemBuilder: (context, idx) {
-      //             return Container(
-      //               decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(16),
-      //                 color: const Color.fromARGB(179, 204, 203, 203),
-      //               ),
-      //               child: ListTile(
-      //                 onTap: () async {
-      //                   final result = await context.push<DataModel>(
-      //                     '/formfill',
-      //                     extra: leaveRequestDetails[idx],
-      //                   );
-      //                   if (result != null) {
-      //                     leaveRequestDetails[idx] = result;
-      //                   }
-      //                 },
-
-      //                 title: Text(
-      //                   '${leaveRequestDetails[idx].leaveType} Leave',
-      //                   style: TextStyle(
-      //                     fontWeight: FontWeight.bold,
-      //                     color: context.watch<FormListProvider>().textColor(
-      //                       leaveRequestDetails[idx].leaveType,
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 subtitle: Text(
-      //                   '${leaveRequestDetails[idx].date.start.toString().split(' ')[0]}  to  ${leaveRequestDetails[idx].date.end.toString().split(' ')[0]}',
-      //                 ),
-      //                 trailing: Column(
-      //                   mainAxisAlignment: MainAxisAlignment.center,
-      //                   children: [
-      //                     Text(
-      //                       leaveRequestDetails[idx].halfDay
-      //                           ? 'HALF DAY'
-      //                           : 'FULL DAY',
-      //                     ),
-      //                     Text(
-      //                       'Days: ${leaveRequestDetails[idx].numberOfDays}',
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-
-
+            },
+          );
+        },
+      ),
     );
   }
 }

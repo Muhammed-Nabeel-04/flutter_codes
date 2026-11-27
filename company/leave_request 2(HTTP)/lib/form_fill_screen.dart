@@ -81,7 +81,6 @@ class _FormFillScreenState extends State<FormFillScreen> {
 
                 builder: (field) => InkWell(
                   onTap: () =>
-
                      context.read<FormFillProvider>().datepicker(context),
 
                   child: InputDecorator(

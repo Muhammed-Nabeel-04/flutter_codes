@@ -6,21 +6,31 @@ class LeaveRepository {
   static const base = 'https://leaverequest-9974a-default-rtdb.firebaseio.com';
 
   Future<List<DataModel>> fetchRequests() async{
-    final res = await http.get(Uri.parse('$base/leaves.json'));
-    if (res.statusCode != 200) throw Exception('Failed to load');
+    final response = await http.get(Uri.parse('$base/leaves.json'));
+    if (response.statusCode != 200) throw Exception('Failed to load');
 
-    final body = jsonDecode(res.body);
+    final body = jsonDecode(response.body) ;
     if (body == null) return [];
 
     final map = body as Map<String, dynamic>;
     return map.entries.map((e)=> DataModel.fromJson(e.key, e.value as Map<String, dynamic>)).toList();
   }
 
-  Future<String> addRequest(DataModel m)async {
-    final res = await http.post(Uri.parse('$base/leaves.json'),
+  Future<void> addRequest(DataModel m)async {
+    final response = await http.post(Uri.parse('$base/leaves.json'),
     body: jsonEncode(m.toJason())
     );
-    if (res.statusCode != 200) throw Exception('Failer to save');
-    return jsonDecode(res.body)['name'];
+    if (response.statusCode != 200) throw Exception('Failed to save');
+    // return jsonDecode(response.body)['name'];
   }
+
+    Future<void> updateStatus(String id, String status) async{
+      final response = await http.patch(
+        Uri.parse('$base/leaves/$id.jason'),
+        
+      );
+    }
+
+
+
 }
